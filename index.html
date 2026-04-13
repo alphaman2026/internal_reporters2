@@ -36,7 +36,7 @@
   .ticker-dot { color:var(--accent2);margin-right:60px; }
   @keyframes tickerScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-  .main-wrap { position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:30px 24px 80px; }
+  .main-wrap { position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:30px 24px 80px; }
 
   .header { text-align:center;padding:50px 0 36px; }
   .header-badge { display:inline-block;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:4px;color:var(--accent);border:1px solid rgba(0,212,255,.3);padding:4px 16px;margin-bottom:18px; }
@@ -44,6 +44,7 @@
   @keyframes titleReveal { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
   .header-sub { font-size:13px;color:var(--text-muted);letter-spacing:3px;margin-top:10px;font-weight:300; }
 
+  /* PLAYER */
   .player-card { background:var(--surface);border:1px solid rgba(0,212,255,.15);border-radius:20px;padding:28px;margin-bottom:24px;position:relative;overflow:hidden; }
   .player-card::before { content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent); }
 
@@ -53,7 +54,7 @@
   @keyframes barBounce { from{height:4px;opacity:.5} to{height:var(--max-h,40px);opacity:1} }
 
   .progress-times { display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:8px;font-variant-numeric:tabular-nums; }
-  .progress-bar-bg { width:100%;height:6px;background:rgba(255,255,255,.08);border-radius:3px;cursor:pointer;position:relative;margin-bottom:18px; }
+  .progress-bar-bg { width:100%;height:6px;background:rgba(255,255,255,.08);border-radius:3px;cursor:pointer;margin-bottom:18px; }
   .progress-bar-fill { height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;width:0%;transition:width .2s linear; }
 
   .controls { display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:14px; }
@@ -74,46 +75,32 @@
   .status-dot.on { background:var(--accent);box-shadow:0 0 6px var(--accent);animation:pulse 1s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.8)} }
 
-  .lyrics-card { background:var(--surface);border:1px solid rgba(0,212,255,.1);border-radius:20px;overflow:hidden; }
-  .lyrics-header { padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;background:var(--surface2); }
-  .lyrics-header-left { display:flex;align-items:center;gap:10px; }
+  /* LYRICS */
+  .lyrics-card { background:var(--surface);border:1px solid rgba(0,212,255,.1);border-radius:20px;overflow:hidden;margin-bottom:36px; }
+  .lyrics-header { padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:10px;background:var(--surface2); }
   .lh-dot { width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse 2s ease-in-out infinite; }
   .lh-title { font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);font-weight:300; }
-  .btn-editor { font-size:11px;letter-spacing:1px;padding:5px 12px;border:1px solid rgba(0,212,255,.3);background:transparent;color:var(--accent);cursor:pointer;border-radius:6px;transition:all .2s; }
-  .btn-editor:hover { background:rgba(0,212,255,.08); }
 
-  .lyrics-scroll { height:480px;overflow-y:auto;scroll-behavior:smooth;padding:16px 0;scrollbar-width:thin;scrollbar-color:rgba(0,212,255,.2) transparent; }
-  .lyrics-scroll::-webkit-scrollbar { width:4px; }
-  .lyrics-scroll::-webkit-scrollbar-thumb { background:rgba(0,212,255,.2);border-radius:2px; }
+  .lyrics-body { padding:28px 36px 36px; }
 
-  .lyric-line { padding:9px 28px;font-size:15px;line-height:1.7;color:var(--text-muted);transition:all .3s ease;border-left:3px solid transparent;cursor:pointer; }
-  .lyric-line:hover { color:var(--text);background:rgba(255,255,255,.02); }
-  .lyric-line.section-label { font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent2);padding:18px 28px 6px;border-left:none;opacity:.7;cursor:default;pointer-events:none; }
-  .lyric-line.spoken { font-style:italic;font-size:14px; }
-  .lyric-line.rollcall { color:rgba(255,224,102,.6);font-weight:600; }
-  .lyric-line.chorus-line { font-weight:700; }
-  .lyric-line.active { color:var(--accent);border-left-color:var(--accent);background:rgba(0,212,255,.05);font-weight:700;font-size:17px;text-shadow:var(--glow);transform:translateX(4px); }
-  .lyric-line.rollcall.active { color:var(--accent3);border-left-color:var(--accent3);background:rgba(255,224,102,.04);text-shadow:0 0 20px rgba(255,224,102,.5); }
-  .lyric-line.chorus-line.active { font-size:19px; }
+  .lyric-block { margin-bottom:28px; }
+  .lyric-section-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--accent2);
+    opacity: .7;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,107,53,.15);
+  }
+  .lyric-line { font-size: 15px; line-height: 2; color: var(--text-muted); }
+  .lyric-line.spoken { font-style: italic; font-size: 14px; color: rgba(232,237,245,.5); }
+  .lyric-line.chorus-line { font-weight: 700; color: var(--text); font-size: 16px; }
+  .lyric-line.rollcall { color: rgba(255,224,102,.75); font-weight: 600; }
 
-  /* TIMING EDITOR */
-  .editor-panel { display:none;background:var(--surface2);border-top:1px solid rgba(255,255,255,.06);padding:16px 20px; }
-  .editor-panel.open { display:block; }
-  .editor-info { font-size:11px;color:var(--accent2);letter-spacing:.5px;margin-bottom:12px;line-height:1.8; }
-  .editor-info code { background:rgba(255,255,255,.06);padding:1px 6px;border-radius:3px;font-family:monospace; }
-  .editor-list { max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:5px;margin-bottom:12px;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.1) transparent; }
-  .editor-row { display:flex;align-items:center;gap:8px; }
-  .editor-row label { font-size:11px;color:var(--text-muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0; }
-  .editor-row input[type=number] { width:70px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--text);padding:4px 7px;font-size:12px;border-radius:5px;font-family:monospace; }
-  .editor-row input[type=number]:focus { outline:none;border-color:var(--accent); }
-  .btn-stamp { font-size:10px;padding:3px 8px;border:1px solid rgba(0,212,255,.3);background:transparent;color:var(--accent);cursor:pointer;border-radius:4px;white-space:nowrap;flex-shrink:0; }
-  .btn-stamp:hover { background:rgba(0,212,255,.1); }
-  .editor-actions { display:flex;gap:8px;flex-wrap:wrap; }
-  .btn-export { font-size:11px;padding:6px 14px;border:1px solid rgba(0,212,255,.4);background:rgba(0,212,255,.05);color:var(--accent);cursor:pointer;border-radius:6px; }
-  .btn-apply { font-size:11px;padding:6px 14px;border:1px solid rgba(255,107,53,.4);background:rgba(255,107,53,.05);color:var(--accent2);cursor:pointer;border-radius:6px; }
-  .export-out { margin-top:10px;background:#0a0f18;border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:10px;font-size:11px;font-family:monospace;color:var(--accent);white-space:pre-wrap;max-height:180px;overflow-y:auto;display:none; }
-
-  .members-section { margin-top:36px; }
+  /* MEMBERS */
+  .members-section { margin-top: 8px; }
   .section-title { font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:12px; }
   .section-title::after { content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(0,212,255,.3),transparent); }
   .members-grid { display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:8px;margin-bottom:24px; }
@@ -129,13 +116,13 @@
   #loading-screen { position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .6s ease; }
   .loading-logo { font-family:'Black Han Sans',sans-serif;font-size:48px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:pulse 1.5s ease-in-out infinite; }
   .loading-bar-wrap { width:200px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden; }
-  .loading-bar-fill { height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;animation:loadFill 1.5s ease-in-out infinite; }
+  .loading-bar-fill { height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));animation:loadFill 1.5s ease-in-out infinite; }
   @keyframes loadFill { 0%{width:0%} 50%{width:70%} 100%{width:100%} }
   .loading-text { font-size:12px;color:var(--text-muted);letter-spacing:3px; }
 
   @media(max-width:600px) {
-    .lyric-line { font-size:13px;padding:7px 18px; }
-    .lyric-line.active { font-size:15px; }
+    .lyrics-body { padding:20px; }
+    .lyric-line { font-size:14px; }
     .player-card { padding:18px; }
     .header-title { font-size:34px; }
   }
@@ -180,6 +167,7 @@
     <div class="header-sub">3기 · 신규 10팀 · 명예 7팀 · 17팀의 목소리</div>
   </div>
 
+  <!-- PLAYER -->
   <div class="player-card">
     <div class="visualizer-wrap" id="visualizer"></div>
     <audio id="audio" preload="auto">
@@ -210,33 +198,129 @@
     </div>
   </div>
 
+  <!-- LYRICS -->
   <div class="lyrics-card">
     <div class="lyrics-header">
-      <div class="lyrics-header-left">
-        <div class="lh-dot"></div>
-        <div class="lh-title">LYRICS SYNC · 가사 싱크</div>
-      </div>
-      <button class="btn-editor" id="btn-toggle-editor">⚙ 타이밍 편집</button>
+      <div class="lh-dot"></div>
+      <div class="lh-title">LYRICS · 가사</div>
     </div>
+    <div class="lyrics-body">
 
-    <div class="editor-panel" id="editor-panel">
-      <div class="editor-info">
-        🎯 <strong>싱크 조정 방법:</strong> 음악을 재생하면서 각 가사가 시작되는 순간 <code>현재시간 적용</code> 버튼을 누르세요. 직접 초(초 단위) 입력도 가능합니다.<br>
-        완료 후 <strong>즉시 적용</strong>으로 반영하고, <strong>내보내기</strong>로 타이밍 값을 복사해 두세요.
+      <div class="lyric-block">
+        <div class="lyric-section-label">INTRO — SPOKEN</div>
+        <div class="lyric-line spoken">2026년, 세 번째 계절이 왔다</div>
+        <div class="lyric-line spoken">트렌드를 읽고, 기술을 파고, 책을 펼치고, 길을 떠나</div>
+        <div class="lyric-line spoken">DS의 일상 속 숨겨진 이야기를 꺼내는 사람들</div>
+        <div class="lyric-line spoken">치열한 경쟁을 뚫고 이 자리에 선</div>
+        <div class="lyric-line spoken">17팀의 목소리 — DS NOW, 시작한다</div>
       </div>
-      <div class="editor-list" id="editor-list"></div>
-      <div class="editor-actions">
-        <button class="btn-apply" id="btn-apply">✅ 즉시 적용</button>
-        <button class="btn-export" id="btn-export">📋 타이밍 내보내기</button>
-      </div>
-      <div class="export-out" id="export-out"></div>
-    </div>
 
-    <div class="lyrics-scroll" id="lyrics-scroll">
-      <div id="lyrics-container"></div>
+      <div class="lyric-block">
+        <div class="lyric-section-label">VERSE 1</div>
+        <div class="lyric-line">사옥 복도 끝에서 카메라 셔터 눌러</div>
+        <div class="lyric-line">평범한 하루 속에 특별한 장면 담아</div>
+        <div class="lyric-line">기술의 흐름 위에 트렌드 파도 타고</div>
+        <div class="lyric-line">독서 한 줄 여행 한 컷, 이야기가 피어나</div>
+        <div class="lyric-line">경쟁을 뚫고 선 기자들, 눈빛부터 달라</div>
+        <div class="lyric-line">DS의 심장 박동을 활자로 전해줄게</div>
+        <div class="lyric-line">뉴스룸이 따로 없어, 현장이 곧 편집실</div>
+        <div class="lyric-line">오늘도 DS NOW는 세상을 향해 달려</div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-section-label">PRE-CHORUS</div>
+        <div class="lyric-line">마감 시간 없어도 열정은 마감 없이</div>
+        <div class="lyric-line">임직원의 시선으로 임직원에게 전해</div>
+        <div class="lyric-line">이건 기사가 아냐, 우리가 사는 이야기</div>
+        <div class="lyric-line">DS의 오늘을 기록하는 17개의 렌즈</div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-section-label">CHORUS</div>
+        <div class="lyric-line chorus-line">DS NOW — 3기가 왔다</div>
+        <div class="lyric-line chorus-line">트렌드 기술 독서 여행, 전부 다 우리 거야</div>
+        <div class="lyric-line chorus-line">신규 명예 나란히 서서</div>
+        <div class="lyric-line chorus-line">DS의 일상을 세상에 외쳐</div>
+        <div class="lyric-line chorus-line">DS NOW — 멈추지 않아</div>
+        <div class="lyric-line chorus-line">치열하게 선발된 이름들이 빛나</div>
+        <div class="lyric-line chorus-line">2026 이 무대 위에</div>
+        <div class="lyric-line chorus-line">우리의 이야기, 지금 시작해</div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-section-label">VERSE 2 — 신규 기자 10팀 ROLL CALL</div>
+        <div class="lyric-line rollcall">마음이 — 따뜻한 시선으로 사람을 담고</div>
+        <div class="lyric-line rollcall">막내 김사원 — 신입의 눈으로 세상을 열고</div>
+        <div class="lyric-line rollcall">물리군 — 복잡한 원리 쉽게 풀어내고</div>
+        <div class="lyric-line rollcall">불꽃셔터카리스마 김디카 — 한 컷에 모든 걸 담아</div>
+        <div class="lyric-line rollcall">사부작거리는 라쿤 — 조용히 깊이 파고들고</div>
+        <div class="lyric-line rollcall">SENATHAN — 글로벌 감성으로 경계를 넘어</div>
+        <div class="lyric-line rollcall">알파남 — 트렌드 최전선을 누비고</div>
+        <div class="lyric-line rollcall">유랑이 — 길 위에서 이야기를 줍고</div>
+        <div class="lyric-line rollcall">제이로그 J-LOG — 일상을 콘텐츠로 바꿔내고</div>
+        <div class="lyric-line rollcall">칩토리 — 기술과 스토리 사이를 잇는다</div>
+        <div class="lyric-line rollcall">신규 10팀, 펜 들어 — 지금 출발해</div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-section-label">BRIDGE — SPOKEN</div>
+        <div class="lyric-line spoken">그리고 여기, 이미 증명한 사람들이 있어</div>
+        <div class="lyric-line spoken">3기의 무게를 함께 짊어질</div>
+        <div class="lyric-line spoken">명예 기자 7팀 —</div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-section-label">VERSE 3 — 명예 기자 7팀 ROLL CALL</div>
+        <div class="lyric-line rollcall">꼬질토끼 — 엉뚱하지만 날카롭게</div>
+        <div class="lyric-line rollcall">NANO — 작지만 강하게, 정밀하게</div>
+        <div class="lyric-line rollcall">동삭동 감자빵 — 동네 감성 특유의 따뜻함으로</div>
+        <div class="lyric-line rollcall">로라 — 세련된 필치로 독자를 이끌고</div>
+        <div class="lyric-line rollcall">카피바라 — 여유롭지만 깊이 있게</div>
+        <div class="lyric-line rollcall">트래블유 — 여행의 언어로 DS를 넓히고</div>
+        <div class="lyric-line rollcall">Han Bro — 형처럼 든든하게 스토리를 받쳐줘</div>
+        <div class="lyric-line rollcall">명예 7팀, 다시 한번 — 함께 가자</div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-section-label">PRE-FINAL BRIDGE — SPOKEN</div>
+        <div class="lyric-line spoken">트렌드가 바뀌어도, 기술이 진화해도</div>
+        <div class="lyric-line spoken">사람의 이야기는 언제나 유효해</div>
+        <div class="lyric-line spoken">책 한 권에서 발견한 인사이트</div>
+        <div class="lyric-line spoken">낯선 도시에서 마주친 DS 사람의 얼굴</div>
+        <div class="lyric-line spoken">그 모든 순간이 기사가 되고, 콘텐츠가 되고</div>
+        <div class="lyric-line spoken">결국엔 우리 모두의 기억이 되는 거야</div>
+        <div class="lyric-line spoken">DS NOW 3기 — 이게 우리의 사명이야</div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-section-label">FINAL CHORUS</div>
+        <div class="lyric-line chorus-line">DS NOW — 3기가 왔다</div>
+        <div class="lyric-line chorus-line">트렌드 기술 독서 여행, 전부 다 우리 거야</div>
+        <div class="lyric-line chorus-line">신규 명예 나란히 서서</div>
+        <div class="lyric-line chorus-line">DS의 일상을 세상에 외쳐</div>
+        <div class="lyric-line chorus-line">DS NOW — 멈추지 않아</div>
+        <div class="lyric-line chorus-line">치열하게 선발된 이름들이 빛나</div>
+        <div class="lyric-line chorus-line">2026 이 무대 위에</div>
+        <div class="lyric-line chorus-line">우리의 이야기, 지금 시작해</div>
+      </div>
+
+      <div class="lyric-block">
+        <div class="lyric-section-label">OUTRO — 전원 ROLL CALL</div>
+        <div class="lyric-line rollcall">마음이 — 막내 김사원 — 물리군</div>
+        <div class="lyric-line rollcall">불꽃셔터카리스마 김디카 — 사부작거리는 라쿤</div>
+        <div class="lyric-line rollcall">SENATHAN — 알파남 — 유랑이</div>
+        <div class="lyric-line rollcall">제이로그 — 칩토리</div>
+        <div class="lyric-line rollcall">꼬질토끼 — NANO — 동삭동 감자빵</div>
+        <div class="lyric-line rollcall">로라 — 카피바라 — 트래블유 — Han Bro</div>
+        <div class="lyric-line rollcall">신규 10팀, 명예 7팀</div>
+        <div class="lyric-line rollcall">DS NOW 3기 — 우리가 쓴다</div>
+        <div class="lyric-line rollcall">2026, 지금 여기서 📰✨</div>
+      </div>
+
     </div>
   </div>
 
+  <!-- MEMBERS -->
   <div class="members-section">
     <div class="section-title">신규 기자 10팀</div>
     <div class="members-grid">
@@ -267,198 +351,20 @@
 </div>
 
 <script>
-// ============================================================
-// LYRICS — 총 233.88초 기준
-// ============================================================
-const LYRICS_DEFAULT = [
-  { t:  0.0, text: '[Intro — Spoken]',                              type: 'section'  },
-  { t:  1.5, text: '2026년, 세 번째 계절이 왔다',                    type: 'spoken'   },
-  { t:  4.5, text: '트렌드를 읽고, 기술을 파고, 책을 펼치고, 길을 떠나', type: 'spoken'   },
-  { t:  8.0, text: 'DS의 일상 속 숨겨진 이야기를 꺼내는 사람들',        type: 'spoken'   },
-  { t: 11.0, text: '치열한 경쟁을 뚫고 이 자리에 선',                  type: 'spoken'   },
-  { t: 13.0, text: '17팀의 목소리 — DS NOW, 시작한다',               type: 'spoken'   },
+const audio       = document.getElementById('audio');
+const btnPlay     = document.getElementById('btn-play');
+const playIcon    = document.getElementById('play-icon');
+const pauseIcon   = document.getElementById('pause-icon');
+const progressBg  = document.getElementById('progress-bg');
+const progressFill= document.getElementById('progress-fill');
+const currentTimeEl = document.getElementById('current-time');
+const totalTimeEl = document.getElementById('total-time');
+const volumeSlider= document.getElementById('volume');
+const statusDot   = document.getElementById('status-dot');
+const statusText  = document.getElementById('status-text');
+const visualizer  = document.getElementById('visualizer');
 
-  { t: 15.5, text: '[Verse 1]',                                     type: 'section'  },
-  { t: 16.0, text: '사옥 복도 끝에서 카메라 셔터 눌러',                 type: 'verse'    },
-  { t: 20.0, text: '평범한 하루 속에 특별한 장면 담아',                  type: 'verse'    },
-  { t: 24.0, text: '기술의 흐름 위에 트렌드 파도 타고',                  type: 'verse'    },
-  { t: 28.0, text: '독서 한 줄 여행 한 컷, 이야기가 피어나',             type: 'verse'    },
-  { t: 32.0, text: '경쟁을 뚫고 선 기자들, 눈빛부터 달라',               type: 'verse'    },
-  { t: 36.0, text: 'DS의 심장 박동을 활자로 전해줄게',                  type: 'verse'    },
-  { t: 40.0, text: '뉴스룸이 따로 없어, 현장이 곧 편집실',               type: 'verse'    },
-  { t: 44.0, text: '오늘도 DS NOW는 세상을 향해 달려',                 type: 'verse'    },
-
-  { t: 47.5, text: '[Pre-Chorus]',                                  type: 'section'  },
-  { t: 48.0, text: '마감 시간 없어도 열정은 마감 없이',                  type: 'verse'    },
-  { t: 51.5, text: '임직원의 시선으로 임직원에게 전해',                   type: 'verse'    },
-  { t: 55.0, text: '이건 기사가 아냐, 우리가 사는 이야기',               type: 'verse'    },
-  { t: 58.5, text: 'DS의 오늘을 기록하는 17개의 렌즈',                 type: 'verse'    },
-
-  { t: 62.0, text: '[Chorus]',                                      type: 'section'  },
-  { t: 62.5, text: 'DS NOW — 3기가 왔다',                            type: 'chorus'   },
-  { t: 65.0, text: '트렌드 기술 독서 여행, 전부 다 우리 거야',            type: 'chorus'   },
-  { t: 67.5, text: '신규 명예 나란히 서서',                             type: 'chorus'   },
-  { t: 70.0, text: 'DS의 일상을 세상에 외쳐',                          type: 'chorus'   },
-  { t: 72.5, text: 'DS NOW — 멈추지 않아',                           type: 'chorus'   },
-  { t: 75.0, text: '치열하게 선발된 이름들이 빛나',                      type: 'chorus'   },
-  { t: 77.0, text: '2026 이 무대 위에',                              type: 'chorus'   },
-  { t: 79.0, text: '우리의 이야기, 지금 시작해',                        type: 'chorus'   },
-
-  { t: 82.0, text: '[Verse 2 — 신규 기자 10팀 Roll Call]',           type: 'section'  },
-  { t: 82.5, text: '마음이 — 따뜻한 시선으로 사람을 담고',               type: 'rollcall' },
-  { t: 85.5, text: '막내 김사원 — 신입의 눈으로 세상을 열고',             type: 'rollcall' },
-  { t: 88.5, text: '물리군 — 복잡한 원리 쉽게 풀어내고',                 type: 'rollcall' },
-  { t: 91.5, text: '불꽃셔터카리스마 김디카 — 한 컷에 모든 걸 담아',      type: 'rollcall' },
-  { t: 94.5, text: '사부작거리는 라쿤 — 조용히 깊이 파고들고',            type: 'rollcall' },
-  { t: 97.5, text: 'SENATHAN — 글로벌 감성으로 경계를 넘어',           type: 'rollcall' },
-  { t:100.5, text: '알파남 — 트렌드 최전선을 누비고',                    type: 'rollcall' },
-  { t:103.5, text: '유랑이 — 길 위에서 이야기를 줍고',                  type: 'rollcall' },
-  { t:106.5, text: '제이로그 J-LOG — 일상을 콘텐츠로 바꿔내고',         type: 'rollcall' },
-  { t:109.5, text: '칩토리 — 기술과 스토리 사이를 잇는다',               type: 'rollcall' },
-  { t:112.5, text: '신규 10팀, 펜 들어 — 지금 출발해',                 type: 'rollcall' },
-
-  { t:115.5, text: '[Bridge — Spoken]',                             type: 'section'  },
-  { t:116.0, text: '그리고 여기, 이미 증명한 사람들이 있어',              type: 'spoken'   },
-  { t:118.5, text: '3기의 무게를 함께 짊어질',                          type: 'spoken'   },
-  { t:120.5, text: '명예 기자 7팀 —',                                 type: 'spoken'   },
-
-  { t:123.0, text: '[Verse 3 — 명예 기자 7팀 Roll Call]',            type: 'section'  },
-  { t:123.5, text: '꼬질토끼 — 엉뚱하지만 날카롭게',                    type: 'rollcall' },
-  { t:126.5, text: 'NANO — 작지만 강하게, 정밀하게',                   type: 'rollcall' },
-  { t:129.5, text: '동삭동 감자빵 — 동네 감성 특유의 따뜻함으로',         type: 'rollcall' },
-  { t:132.5, text: '로라 — 세련된 필치로 독자를 이끌고',                 type: 'rollcall' },
-  { t:135.5, text: '카피바라 — 여유롭지만 깊이 있게',                   type: 'rollcall' },
-  { t:138.5, text: '트래블유 — 여행의 언어로 DS를 넓히고',              type: 'rollcall' },
-  { t:141.5, text: 'Han Bro — 형처럼 든든하게 스토리를 받쳐줘',        type: 'rollcall' },
-  { t:144.5, text: '명예 7팀, 다시 한번 — 함께 가자',                  type: 'rollcall' },
-
-  { t:148.0, text: '[Pre-Final Bridge — Spoken]',                   type: 'section'  },
-  { t:148.5, text: '트렌드가 바뀌어도, 기술이 진화해도',                  type: 'spoken'   },
-  { t:152.0, text: '사람의 이야기는 언제나 유효해',                      type: 'spoken'   },
-  { t:155.0, text: '책 한 권에서 발견한 인사이트',                       type: 'spoken'   },
-  { t:157.5, text: '낯선 도시에서 마주친 DS 사람의 얼굴',                type: 'spoken'   },
-  { t:160.5, text: '그 모든 순간이 기사가 되고, 콘텐츠가 되고',          type: 'spoken'   },
-  { t:163.5, text: '결국엔 우리 모두의 기억이 되는 거야',                type: 'spoken'   },
-  { t:166.5, text: 'DS NOW 3기 — 이게 우리의 사명이야',               type: 'spoken'   },
-
-  { t:169.5, text: '[Final Chorus]',                                type: 'section'  },
-  { t:170.0, text: 'DS NOW — 3기가 왔다',                            type: 'chorus'   },
-  { t:172.5, text: '트렌드 기술 독서 여행, 전부 다 우리 거야',            type: 'chorus'   },
-  { t:175.0, text: '신규 명예 나란히 서서',                             type: 'chorus'   },
-  { t:177.5, text: 'DS의 일상을 세상에 외쳐',                          type: 'chorus'   },
-  { t:180.0, text: 'DS NOW — 멈추지 않아',                           type: 'chorus'   },
-  { t:182.5, text: '치열하게 선발된 이름들이 빛나',                      type: 'chorus'   },
-  { t:185.0, text: '2026 이 무대 위에',                              type: 'chorus'   },
-  { t:187.5, text: '우리의 이야기, 지금 시작해',                        type: 'chorus'   },
-
-  { t:192.0, text: '[Outro — 전원 Roll Call]',                       type: 'section'  },
-  { t:192.5, text: '마음이 — 막내 김사원 — 물리군',                    type: 'rollcall' },
-  { t:197.0, text: '불꽃셔터카리스마 김디카 — 사부작거리는 라쿤',         type: 'rollcall' },
-  { t:201.5, text: 'SENATHAN — 알파남 — 유랑이',                    type: 'rollcall' },
-  { t:206.0, text: '제이로그 — 칩토리',                               type: 'rollcall' },
-  { t:210.0, text: '꼬질토끼 — NANO — 동삭동 감자빵',                type: 'rollcall' },
-  { t:214.5, text: '로라 — 카피바라 — 트래블유 — Han Bro',           type: 'rollcall' },
-  { t:219.0, text: '신규 10팀, 명예 7팀',                            type: 'rollcall' },
-  { t:223.0, text: 'DS NOW 3기 — 우리가 쓴다',                      type: 'rollcall' },
-  { t:227.0, text: '2026, 지금 여기서 📰✨',                        type: 'rollcall' },
-];
-
-let LYRICS = LYRICS_DEFAULT.map(l => ({ ...l }));
-
-// ============================================================
-// DOM
-// ============================================================
-const audio           = document.getElementById('audio');
-const btnPlay         = document.getElementById('btn-play');
-const playIcon        = document.getElementById('play-icon');
-const pauseIcon       = document.getElementById('pause-icon');
-const progressBg      = document.getElementById('progress-bg');
-const progressFill    = document.getElementById('progress-fill');
-const currentTimeEl   = document.getElementById('current-time');
-const totalTimeEl     = document.getElementById('total-time');
-const volumeSlider    = document.getElementById('volume');
-const lyricsContainer = document.getElementById('lyrics-container');
-const lyricsScroll    = document.getElementById('lyrics-scroll');
-const statusDot       = document.getElementById('status-dot');
-const statusText      = document.getElementById('status-text');
-const visualizer      = document.getElementById('visualizer');
-const editorPanel     = document.getElementById('editor-panel');
-const editorList      = document.getElementById('editor-list');
-const exportOut       = document.getElementById('export-out');
-
-// ============================================================
-// BUILD LYRICS DOM
-// ============================================================
-let lyricEls = [];
-
-function buildLyrics() {
-  lyricsContainer.innerHTML = '';
-  lyricEls = [];
-  LYRICS.forEach((line, i) => {
-    const el = document.createElement('div');
-    el.className = 'lyric-line';
-    if (line.type === 'section')  el.classList.add('section-label');
-    if (line.type === 'spoken')   el.classList.add('spoken');
-    if (line.type === 'chorus')   el.classList.add('chorus-line');
-    if (line.type === 'rollcall') el.classList.add('rollcall');
-    el.textContent = line.text;
-    if (line.type !== 'section') {
-      el.addEventListener('click', () => { audio.currentTime = line.t; if (audio.paused) audio.play(); });
-    }
-    lyricsContainer.appendChild(el);
-    lyricEls.push(el);
-  });
-}
-buildLyrics();
-
-// ============================================================
-// BUILD EDITOR
-// ============================================================
-function buildEditor() {
-  editorList.innerHTML = '';
-  LYRICS.forEach((line, i) => {
-    const row = document.createElement('div');
-    row.className = 'editor-row';
-    const label = document.createElement('label');
-    label.textContent = line.text;
-    label.title = line.text;
-    const inp = document.createElement('input');
-    inp.type = 'number'; inp.min = 0; inp.max = 240; inp.step = 0.1;
-    inp.value = line.t; inp.dataset.index = i;
-    const stamp = document.createElement('button');
-    stamp.className = 'btn-stamp';
-    stamp.textContent = '현재시간 적용';
-    stamp.addEventListener('click', () => {
-      const t = parseFloat(audio.currentTime.toFixed(1));
-      LYRICS[i].t = t; inp.value = t;
-    });
-    row.appendChild(label); row.appendChild(inp); row.appendChild(stamp);
-    editorList.appendChild(row);
-  });
-}
-buildEditor();
-
-document.getElementById('btn-toggle-editor').addEventListener('click', () => {
-  editorPanel.classList.toggle('open');
-});
-document.getElementById('btn-apply').addEventListener('click', () => {
-  editorList.querySelectorAll('input[type=number]').forEach(inp => {
-    LYRICS[parseInt(inp.dataset.index)].t = parseFloat(inp.value);
-  });
-  activeLyricIndex = -1;
-  buildLyrics();
-  alert('✅ 타이밍 적용 완료!');
-});
-document.getElementById('btn-export').addEventListener('click', () => {
-  const out = LYRICS.map(l => `  { t:${String(l.t.toFixed(1)).padStart(6)}, text: "${l.text}", type: '${l.type}' },`).join('\n');
-  exportOut.textContent = `const LYRICS_DEFAULT = [\n${out}\n];`;
-  exportOut.style.display = 'block';
-  navigator.clipboard?.writeText(exportOut.textContent).catch(() => {});
-});
-
-// ============================================================
-// VISUALIZER
-// ============================================================
+// Visualizer bars
 for (let i = 0; i < 48; i++) {
   const bar = document.createElement('div');
   bar.className = 'bar';
@@ -468,16 +374,12 @@ for (let i = 0; i < 48; i++) {
   visualizer.appendChild(bar);
 }
 
-// ============================================================
-// PLAYER
-// ============================================================
-let activeLyricIndex = -1;
 const fmt = s => Math.floor(s/60) + ':' + String(Math.floor(s%60)).padStart(2,'0');
 
 audio.volume = 0.85;
 btnPlay.addEventListener('click', () => audio.paused ? audio.play() : audio.pause());
 document.getElementById('btn-back').addEventListener('click', () => { audio.currentTime = Math.max(0, audio.currentTime - 10); });
-document.getElementById('btn-fwd').addEventListener('click',  () => { audio.currentTime = Math.min(audio.duration || 999, audio.currentTime + 10); });
+document.getElementById('btn-fwd').addEventListener('click',  () => { audio.currentTime = Math.min(audio.duration||999, audio.currentTime + 10); });
 volumeSlider.addEventListener('input', () => { audio.volume = volumeSlider.value; });
 audio.addEventListener('loadedmetadata', () => { totalTimeEl.textContent = fmt(audio.duration); });
 
@@ -495,43 +397,20 @@ audio.addEventListener('ended', () => {
   playIcon.style.display = ''; pauseIcon.style.display = 'none';
   statusDot.classList.remove('on'); statusText.textContent = '재생 완료 ✨';
   visualizer.classList.remove('playing');
-  activeLyricIndex = -1; lyricEls.forEach(el => el.classList.remove('active'));
 });
-
+audio.addEventListener('timeupdate', () => {
+  const t = audio.currentTime, dur = audio.duration || 1;
+  progressFill.style.width = (t / dur * 100) + '%';
+  currentTimeEl.textContent = fmt(t);
+});
 progressBg.addEventListener('click', e => {
   const r = progressBg.getBoundingClientRect();
   audio.currentTime = ((e.clientX - r.left) / r.width) * (audio.duration || 0);
 });
 
-// ============================================================
-// SYNC ENGINE
-// ============================================================
-audio.addEventListener('timeupdate', () => {
-  const t = audio.currentTime, dur = audio.duration || 1;
-  progressFill.style.width = (t / dur * 100) + '%';
-  currentTimeEl.textContent = fmt(t);
-
-  let newIdx = -1;
-  for (let i = LYRICS.length - 1; i >= 0; i--) {
-    if (LYRICS[i].type !== 'section' && t >= LYRICS[i].t) { newIdx = i; break; }
-  }
-  if (newIdx !== activeLyricIndex) {
-    if (activeLyricIndex >= 0) lyricEls[activeLyricIndex].classList.remove('active');
-    activeLyricIndex = newIdx;
-    if (activeLyricIndex >= 0) {
-      const el = lyricEls[activeLyricIndex];
-      el.classList.add('active');
-      lyricsScroll.scrollTo({ top: el.offsetTop - lyricsScroll.clientHeight / 2 + el.clientHeight / 2, behavior: 'smooth' });
-    }
-  }
-});
-
-// ============================================================
-// LOADING
-// ============================================================
 window.addEventListener('load', () => {
   const ls = document.getElementById('loading-screen');
-  setTimeout(() => { ls.style.opacity = '0'; setTimeout(() => { ls.style.display = 'none'; }, 600); }, 1000);
+  setTimeout(() => { ls.style.opacity = '0'; setTimeout(() => ls.style.display = 'none', 600); }, 1000);
 });
 </script>
 </body>
