@@ -12,6 +12,8 @@
             --text-dim: #6b7280;
         }
 
+        * { box-sizing: border-box; }
+
         body {
             font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
             background-color: var(--bg);
@@ -25,61 +27,98 @@
 
         header {
             width: 100%;
-            padding: 40px 20px;
+            padding: 36px 20px 28px;
             text-align: center;
             background: linear-gradient(to bottom, #111827, #05070a);
         }
 
         h1 {
-            font-size: 2rem;
-            margin: 0;
+            font-size: 1.9rem;
+            margin: 0 0 6px;
             background: linear-gradient(45deg, var(--primary), #fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            letter-spacing: 1px;
         }
 
         .player-wrapper {
             position: sticky;
             top: 0;
             width: 100%;
-            max-width: 500px;
-            padding: 20px;
-            background: rgba(5, 7, 10, 0.9);
-            backdrop-filter: blur(10px);
+            max-width: 520px;
+            padding: 14px 20px;
+            background: rgba(5, 7, 10, 0.92);
+            backdrop-filter: blur(12px);
             z-index: 100;
             border-bottom: 1px solid #1f2937;
         }
 
-        audio { width: 100%; filter: invert(100%) hue-rotate(180deg); }
+        .progress-bar-wrap {
+            width: 100%;
+            height: 3px;
+            background: #1f2937;
+            border-radius: 2px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.3s linear;
+        }
+
+        audio {
+            width: 100%;
+            filter: invert(100%) hue-rotate(180deg);
+        }
 
         .lyrics-container {
             width: 100%;
-            max-width: 600px;
-            padding: 40px 20px 150px 20px;
+            max-width: 620px;
+            padding: 40px 20px 160px;
             text-align: center;
-            box-sizing: border-box;
         }
 
         .line {
-            padding: 15px 0;
-            font-size: 1.25rem;
+            padding: 13px 0;
+            font-size: 1.2rem;
             color: var(--text-dim);
-            transition: all 0.4s ease;
+            transition: all 0.35s ease;
+            line-height: 1.6;
         }
 
         .line.active {
             color: var(--text);
             font-weight: 800;
-            font-size: 1.6rem;
-            text-shadow: 0 0 15px rgba(0, 170, 255, 0.5);
+            font-size: 1.55rem;
+            text-shadow: 0 0 18px rgba(0, 170, 255, 0.55);
         }
 
         .section-tag {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--primary);
-            margin-top: 50px;
+            margin-top: 48px;
+            margin-bottom: 4px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
+            opacity: 0.8;
+        }
+
+        .spoken {
+            font-style: italic;
+            font-size: 1.05rem;
+        }
+
+        .spoken.active {
+            font-size: 1.3rem;
         }
     </style>
 </head>
@@ -87,92 +126,184 @@
 
 <header>
     <h1>DS NOW 사내기자단 2026 📰</h1>
+    <div class="subtitle">We Tell the Story — 3기</div>
 </header>
 
 <div class="player-wrapper">
     <audio id="music-player" controls>
+        <source src="DS_NOW_사내기자단.mp3" type="audio/mpeg">
         <source src="DS NOW 사내기자단.mp3" type="audio/mpeg">
     </audio>
+    <div class="progress-bar-wrap" id="progress-wrap">
+        <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
 </div>
 
 <div class="lyrics-container" id="lyrics-box"></div>
 
 <script>
     const lyricsData = [
-        { time: 8, text: "2026년, 세 번째 계절이 왔다" },
-        { time: 11, text: "트렌드를 읽고, 기술을 파고, 책을 펼치고, 길을 떠나" },
-        { time: 15, text: "DS의 일상 속 숨겨진 이야기를 꺼내는 사람들" },
-        { time: 19, text: "치열한 경쟁을 뚫고 이 자리에 선" },
-        { time: 22, text: "17팀의 목소리 — DS NOW, 시작한다" },
-        { time: 26, text: "[Verse 1]", isTag: true },
-        { time: 27, text: "사옥 복도 끝에서 카메라 셔터 눌러" },
-        { time: 30, text: "평범한 하루 속에 특별한 장면 담아" },
-        { time: 33, text: "기술의 흐름 위에 트렌드 파도 타고" },
-        { time: 36, text: "독서 한 줄 여행 한 컷, 이야기가 피어나" },
-        { time: 39, text: "경쟁을 뚫고 선 기자들, 눈빛부터 달라" },
-        { time: 42, text: "DS의 심장 박동을 활자로 전해줄게" },
-        { time: 45, text: "뉴스룸이 따로 없어, 현장이 곧 편집실" },
-        { time: 48, text: "오늘도 DS NOW는 세상을 향해 달려" },
-        { time: 51, text: "[Chorus]", isTag: true },
-        { time: 52, text: "DS NOW — 3기가 왔다" },
-        { time: 55, text: "트렌드 기술 독서 여행, 전부 다 우리 거야" },
-        { time: 58, text: "신규 명예 나란히 서서" },
-        { time: 61, text: "DS의 일상을 세상에 외쳐" },
-        { time: 64, text: "DS NOW — 멈추지 않아" },
-        { time: 67, text: "치열하게 선발된 이름들이 빛나" },
-        { time: 70, text: "2026 이 무대 위에" },
-        { time: 73, text: "우리의 이야기, 지금 시작해" },
-        { time: 76, text: "[Verse 2 - 신규 10팀]", isTag: true },
-        { time: 78, text: "마음이 — 따뜻한 시선으로 사람을 담고" },
-        { time: 81, text: "막내 김사원 — 신입의 눈으로 세상을 열고" },
-        { time: 84, text: "물리군 — 복잡한 원리 쉽게 풀어내고" },
-        { time: 87, text: "불꽃셔터카리스마 김디카 — 한 컷에 모든 걸 담아" },
-        { time: 90, text: "사부작거리는 라쿤 — 조용히 깊이 파고들고" },
-        { time: 93, text: "SENATHAN — 글로벌 감성으로 경계를 넘어" },
-        { time: 96, text: "알파남 — 트렌드 최전선을 누비고" },
-        { time: 99, text: "유랑이 — 길 위에서 이야기를 줍고" },
-        { time: 102, text: "제이로그 J-LOG — 일상을 콘텐츠로 바꿔내고" },
-        { time: 105, text: "칩토리 — 기술과 스토리 사이를 잇는다" },
-        { time: 108, text: "신규 10팀, 펜 들어 — 지금 출발해" },
-        { time: 111, text: "[Bridge]", isTag: true },
-        { time: 112, text: "이미 증명한 사람들이 있어, 명예 기자 7팀 —" },
-        { time: 116, text: "[Verse 3 - 명예 7팀]", isTag: true },
-        { time: 118, text: "꼬질토끼 — 엉뚱하지만 날카롭게" },
-        { time: 121, text: "NANO — 작지만 강하게, 정밀하게" },
-        { time: 124, text: "동삭동 감자빵 — 동네 감성 특유의 따뜻함으로" },
-        { time: 127, text: "로라 — 세련된 필치로 독자를 이끌고" },
-        { time: 130, text: "카피바라 — 여유롭지만 깊이 있게" },
-        { time: 133, text: "트래블유 — 여행의 언어로 DS를 넓히고" },
-        { time: 136, text: "Han Bro — 형처럼 든든하게 스토리를 받쳐줘" },
-        { time: 139, text: "[Outro]", isTag: true },
-        { time: 141, text: "DS NOW 3기 — 우리가 쓴다" },
-        { time: 144, text: "2026, 지금 여기서 📰✨" }
+        // Intro Spoken
+        { time: 0,   text: "[Intro]", isTag: true },
+        { time: 1,   text: "2026년, 세 번째 계절이 왔다", isSpoken: true },
+        { time: 4,   text: "트렌드를 읽고, 기술을 파고, 책을 펼치고, 길을 떠나", isSpoken: true },
+        { time: 9,   text: "DS의 일상 속 숨겨진 이야기를 꺼내는 사람들", isSpoken: true },
+        { time: 13,  text: "치열한 경쟁을 뚫고 이 자리에 선", isSpoken: true },
+        { time: 17,  text: "17팀의 목소리 — DS NOW, 시작한다", isSpoken: true },
+
+        // Verse 1
+        { time: 22,  text: "[Verse 1]", isTag: true },
+        { time: 23,  text: "사옥 복도 끝에서 카메라 셔터 눌러" },
+        { time: 27,  text: "평범한 하루 속에 특별한 장면 담아" },
+        { time: 31,  text: "기술의 흐름 위에 트렌드 파도 타고" },
+        { time: 35,  text: "독서 한 줄 여행 한 컷, 이야기가 피어나" },
+        { time: 39,  text: "경쟁을 뚫고 선 기자들, 눈빛부터 달라" },
+        { time: 43,  text: "DS의 심장 박동을 활자로 전해줄게" },
+        { time: 47,  text: "뉴스룸이 따로 없어, 현장이 곧 편집실" },
+        { time: 51,  text: "오늘도 DS NOW는 세상을 향해 달려" },
+
+        // Pre-Chorus
+        { time: 55,  text: "[Pre-Chorus]", isTag: true },
+        { time: 56,  text: "마감 시간 없어도 열정은 마감 없이" },
+        { time: 60,  text: "임직원의 시선으로 임직원에게 전해" },
+        { time: 64,  text: "이건 기사가 아냐, 우리가 사는 이야기" },
+        { time: 68,  text: "DS의 오늘을 기록하는 17개의 렌즈" },
+
+        // Chorus
+        { time: 72,  text: "[Chorus]", isTag: true },
+        { time: 73,  text: "DS NOW — 3기가 왔다" },
+        { time: 77,  text: "트렌드 기술 독서 여행, 전부 다 우리 거야" },
+        { time: 81,  text: "신규 명예 나란히 서서" },
+        { time: 84,  text: "DS의 일상을 세상에 외쳐" },
+        { time: 88,  text: "DS NOW — 멈추지 않아" },
+        { time: 92,  text: "치열하게 선발된 이름들이 빛나" },
+        { time: 96,  text: "2026 이 무대 위에" },
+        { time: 100, text: "우리의 이야기, 지금 시작해" },
+
+        // Verse 2 Roll Call
+        { time: 104, text: "[Verse 2 — 신규 기자 10팀 Roll Call]", isTag: true },
+        { time: 106, text: "마음이 — 따뜻한 시선으로 사람을 담고" },
+        { time: 109, text: "막내 김사원 — 신입의 눈으로 세상을 열고" },
+        { time: 112, text: "물리군 — 복잡한 원리 쉽게 풀어내고" },
+        { time: 115, text: "불꽃셔터카리스마 김디카 — 한 컷에 모든 걸 담아" },
+        { time: 118, text: "사부작거리는 라쿤 — 조용히 깊이 파고들고" },
+        { time: 121, text: "SENATHAN — 글로벌 감성으로 경계를 넘어" },
+        { time: 124, text: "알파남 — 트렌드 최전선을 누비고" },
+        { time: 127, text: "유랑이 — 길 위에서 이야기를 줍고" },
+        { time: 130, text: "제이로그 J-LOG — 일상을 콘텐츠로 바꿔내고" },
+        { time: 133, text: "칩토리 — 기술과 스토리 사이를 잇는다" },
+        { time: 136, text: "신규 10팀, 펜 들어 — 지금 출발해" },
+
+        // Bridge Spoken
+        { time: 139, text: "[Bridge]", isTag: true },
+        { time: 140, text: "그리고 여기, 이미 증명한 사람들이 있어", isSpoken: true },
+        { time: 144, text: "3기의 무게를 함께 짊어질", isSpoken: true },
+        { time: 147, text: "명예 기자 7팀 —", isSpoken: true },
+
+        // Verse 3 Roll Call
+        { time: 150, text: "[Verse 3 — 명예 기자 7팀 Roll Call]", isTag: true },
+        { time: 152, text: "꼬질토끼 — 엉뚱하지만 날카롭게" },
+        { time: 155, text: "NANO — 작지만 강하게, 정밀하게" },
+        { time: 158, text: "동삭동 감자빵 — 동네 감성 특유의 따뜻함으로" },
+        { time: 161, text: "로라 — 세련된 필치로 독자를 이끌고" },
+        { time: 164, text: "카피바라 — 여유롭지만 깊이 있게" },
+        { time: 167, text: "트래블유 — 여행의 언어로 DS를 넓히고" },
+        { time: 170, text: "Han Bro — 형처럼 든든하게 스토리를 받쳐줘" },
+        { time: 173, text: "명예 7팀, 다시 한번 — 함께 가자" },
+
+        // Pre-Final Bridge Spoken
+        { time: 177, text: "[Pre-Final Bridge]", isTag: true },
+        { time: 178, text: "트렌드가 바뀌어도, 기술이 진화해도", isSpoken: true },
+        { time: 182, text: "사람의 이야기는 언제나 유효해", isSpoken: true },
+        { time: 185, text: "책 한 권에서 발견한 인사이트", isSpoken: true },
+        { time: 188, text: "낯선 도시에서 마주친 DS 사람의 얼굴", isSpoken: true },
+        { time: 192, text: "그 모든 순간이 기사가 되고, 콘텐츠가 되고", isSpoken: true },
+        { time: 196, text: "결국엔 우리 모두의 기억이 되는 거야", isSpoken: true },
+        { time: 200, text: "DS NOW 3기 — 이게 우리의 사명이야", isSpoken: true },
+
+        // Final Chorus
+        { time: 204, text: "[Final Chorus]", isTag: true },
+        { time: 205, text: "DS NOW — 3기가 왔다" },
+        { time: 208, text: "트렌드 기술 독서 여행, 전부 다 우리 거야" },
+        { time: 212, text: "신규 명예 나란히 서서" },
+        { time: 215, text: "DS의 일상을 세상에 외쳐" },
+        { time: 218, text: "DS NOW — 멈추지 않아" },
+        { time: 221, text: "치열하게 선발된 이름들이 빛나" },
+        { time: 224, text: "2026 이 무대 위에" },
+        { time: 227, text: "우리의 이야기, 지금 시작해" },
+
+        // Outro Roll Call
+        { time: 231, text: "[Outro — 전원 Roll Call]", isTag: true },
+        { time: 232, text: "마음이 — 막내 김사원 — 물리군" },
+        { time: 235, text: "불꽃셔터카리스마 김디카 — 사부작거리는 라쿤" },
+        { time: 238, text: "SENATHAN — 알파남 — 유랑이" },
+        { time: 241, text: "제이로그 — 칩토리" },
+        { time: 244, text: "꼬질토끼 — NANO — 동삭동 감자빵" },
+        { time: 247, text: "로라 — 카피바라 — 트래블유 — Han Bro" },
+        { time: 250, text: "신규 10팀, 명예 7팀" },
+        { time: 253, text: "DS NOW 3기 — 우리가 쓴다" },
+        { time: 257, text: "2026, 지금 여기서 📰✨" }
     ];
 
     const lyricsBox = document.getElementById('lyrics-box');
     const audio = document.getElementById('music-player');
+    const progressFill = document.getElementById('progress-fill');
+    const progressWrap = document.getElementById('progress-wrap');
 
+    // Build DOM
     lyricsData.forEach((data, index) => {
         const div = document.createElement('div');
-        div.className = data.isTag ? 'section-tag' : 'line';
+        if (data.isTag) {
+            div.className = 'section-tag';
+        } else {
+            div.className = data.isSpoken ? 'line spoken' : 'line';
+        }
         div.id = `line-${index}`;
         div.innerText = data.text;
         lyricsBox.appendChild(div);
     });
 
+    // Progress bar click to seek
+    progressWrap.addEventListener('click', (e) => {
+        const rect = progressWrap.getBoundingClientRect();
+        const ratio = (e.clientX - rect.left) / rect.width;
+        if (audio.duration) audio.currentTime = ratio * audio.duration;
+    });
+
+    // Active line tracking
+    let lastActiveIndex = -1;
+
     audio.addEventListener('timeupdate', () => {
         const currentTime = audio.currentTime;
-        lyricsData.forEach((data, index) => {
-            if (!data.isTag) {
-                const element = document.getElementById(`line-${index}`);
-                const nextData = lyricsData.slice(index + 1).find(d => !d.isTag);
-                if (currentTime >= data.time && (!nextData || currentTime < nextData.time)) {
-                    document.querySelectorAll('.line.active').forEach(el => el.classList.remove('active'));
-                    element.classList.add('active');
-                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+
+        // Update progress bar
+        if (audio.duration) {
+            progressFill.style.width = (currentTime / audio.duration * 100) + '%';
+        }
+
+        // Find current active lyric line
+        const nonTagLines = lyricsData
+            .map((d, i) => ({ ...d, index: i }))
+            .filter(d => !d.isTag);
+
+        let activeIndex = -1;
+        for (let i = 0; i < nonTagLines.length; i++) {
+            const next = nonTagLines[i + 1];
+            if (currentTime >= nonTagLines[i].time && (!next || currentTime < next.time)) {
+                activeIndex = nonTagLines[i].index;
+                break;
             }
-        });
+        }
+
+        if (activeIndex !== -1 && activeIndex !== lastActiveIndex) {
+            document.querySelectorAll('.line.active').forEach(el => el.classList.remove('active'));
+            const el = document.getElementById(`line-${activeIndex}`);
+            if (el) {
+                el.classList.add('active');
+                el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            lastActiveIndex = activeIndex;
+        }
     });
 </script>
 </body>
